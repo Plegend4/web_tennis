@@ -7,7 +7,7 @@
 $servername = "localhost"; 
 $username = "root";       
 $password = "";           // Mật khẩu CSDL (thường là rỗng)
-$dbname = "db_Tennis_club";  // TÊN CSDL ĐÃ ĐƯỢC CẬP NHẬT
+$dbname = "db_tennis_club";  // TÊN CSDL ĐÃ ĐƯỢC CẬP NHẬT
 
 // Tạo kết nối
 $conn = new mysqli($servername, $username, $password, $dbname);

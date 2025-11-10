@@ -18,22 +18,27 @@ include 'header.php';
             </div>
             <div class="marquee">
                 <div class="marquee-content">
-                    <span class="province-placeholder">Hà Nội</span>
-                    <span class="province-placeholder">TP.HCM</span>
-                    <span class="province-placeholder">Đà Nẵng</span>
-                    <span class="province-placeholder">Hải Phòng</span>
-                    <span class="province-placeholder">Cần Thơ</span>
-                    <span class="province-placeholder">Đồng Nai</span>
-                    <span class="province-placeholder">Bình Dương</span>
-                    <span class="province-placeholder">Nghệ An</span>
-                    <span class="province-placeholder">Hà Nội</span>
-                    <span class="province-placeholder">TP.HCM</span>
-                    <span class="province-placeholder">Đà Nẵng</span>
-                    <span class="province-placeholder">Hải Phòng</span>
-                    <span class="province-placeholder">Cần Thơ</span>
-                    <span class="province-placeholder">Đồng Nai</span>
-                    <span class="province-placeholder">Bình Dương</span>
-                    <span class="province-placeholder">Nghệ An</span>
+                    <?php
+                    // Lấy danh sách các tỉnh/thành phố từ CSDL
+                    $sql_cities = "SELECT DISTINCT city FROM clubs WHERE is_active = 1 ORDER BY city";
+                    $result_cities = $conn->query($sql_cities);
+                    $cities = [];
+                    if ($result_cities->num_rows > 0) {
+                        while($row = $result_cities->fetch_assoc()) {
+                            $cities[] = htmlspecialchars($row['city']);
+                        }
+                    } else {
+                        // Fallback nếu không có CLB nào
+                        $cities = ['Hà Nội', 'TP.HCM', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ'];
+                    }
+
+                    // Lặp lại mảng 2 lần để hiệu ứng marquee đẹp hơn
+                    $marquee_cities = array_merge($cities, $cities);
+
+                    foreach ($marquee_cities as $city) {
+                        echo '<span class="province-placeholder">' . $city . '</span>';
+                    }
+                    ?>
                 </div>
             </div>
         </section>
