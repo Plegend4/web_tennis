@@ -78,21 +78,12 @@
             <div class="footer-partners">
                 <h3 class="section-subtitle">ĐỐI TÁC VÀ NHÀ TÀI TRỢ CHÍNH THỨC</h3>
                 <div class="partner-logos">
-                    <?php
-                    if (isset($conn)) {
-                        $sql_sponsors = "SELECT name FROM sponsors ORDER BY level DESC, name ASC LIMIT 4";
-                        $result_sponsors = $conn->query($sql_sponsors);
-
-                        if ($result_sponsors && $result_sponsors->num_rows > 0) {
-                            while($row = $result_sponsors->fetch_assoc()) {
-                                echo '<span class="partner">[' . htmlspecialchars(strtoupper($row["name"])) . ']</span>';
-                            }
-                        } else {
-                            echo '<span class="partner">[ĐANG CẬP NHẬT]</span>';
-                        }
-                    }
-                    ?>
-                    </div>
+                    <img src="img/logo_ggroup.png" alt="Logo G-Group" class="partner-logo">
+                    <img src="img/logo_songtra.png" alt="Logo Song Tra" class="partner-logo">
+                    <img src="img/logo_thanhgiong.png" alt="Logo Thanh Giong" class="partner-logo">
+                    <img src="img/logo_upvietnam.png" alt="Logo Up Vietnam" class="partner-logo">
+                    <img src="img/logo_xtlenergy.png" alt="Logo XTL Energy" class="partner-logo">
+                </div>
             </div>
 
             <div class="footer-bottom">

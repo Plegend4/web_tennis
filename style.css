@@ -803,7 +803,7 @@ footer {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px;
 }
 
 .partner-logos .partner {
@@ -817,6 +817,19 @@ footer {
     box-sizing: border-box;
     flex-shrink: 0;
     border-radius: 6px;
+}
+
+.partner-logo {
+    height: 80px; /* Cập nhật chiều cao logo theo yêu cầu */
+    max-width: 180px; /* Điều chỉnh chiều rộng tối đa */
+    object-fit: contain;
+    filter: grayscale(100%) brightness(150%);
+    transition: all 0.3s ease;
+}
+
+.partner-logo:hover {
+    filter: grayscale(0%) brightness(100%);
+    transform: scale(1.1);
 }
 
 
