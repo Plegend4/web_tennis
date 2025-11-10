@@ -1,0 +1,953 @@
+/* ========================================= */
+/* 0. THIẾT LẬP CHUNG VÀ BIẾN MÀU SẮC */
+/* ========================================= */
+:root {
+    --color-dark-bg: #2d2d2d; /* Màu nền Header/Footer tối */
+    --color-primary: #1a1a1a; /* Màu chữ/tiêu đề chính */
+    --color-accent: #7CB342; /* Xanh Lá Cây (Điểm nhấn) */
+    --color-secondary: #558B2F; /* Xanh Lá Cây Đậm */
+    --color-cta: #FFD700; /* Màu vàng cho nút nổi bật */
+    --color-light: #ffffff; /* Trắng */
+    --color-text-dark: #333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Các tiêu đề chung */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: var(--color-primary);
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--color-accent);
+    border-radius: 2px;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Buttons */
+.btn-cta {
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    box-shadow: 0 8px 25px rgba(124, 179, 66, 0.4);
+}
+
+.btn-cta:hover {
+    box-shadow: 0 10px 30px rgba(124, 179, 66, 0.6);
+    transform: translateY(-3px);
+}
+
+.btn-secondary {
+    background: var(--color-primary);
+    color: var(--color-light);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: background 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-secondary:hover {
+    background: var(--color-accent);
+    color: var(--color-primary);
+}
+
+
+/* ========================================= */
+/* 1. HEADER & NAVIGATION BAR (Tối ưu theo mẫu) */
+/* ========================================= */
+header {
+    background: var(--color-dark-bg);
+    padding: 0.8rem 0; 
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    border-bottom: 2px solid rgba(124, 179, 66, 0.2);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.02);
+}
+
+/* ẨN ICON TENNIS VÀ ĐỊNH KIỂU CHO ẢNH LOGO MỚI */
+.logo i, .footer-logo i {
+    display: none; 
+}
+
+.site-logo {
+    height: 40px; /* CẬP NHẬT: Chiều cao logo trên Header */
+    width: auto;
+    flex-shrink: 0;
+}
+
+.logo-text {
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem; 
+}
+
+.logo-sub {
+    color: var(--color-accent);
+    font-size: 0.75rem; 
+    font-weight: 300;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 0.2rem; 
+    align-items: center;
+    flex-shrink: 1;
+    min-width: 0; 
+}
+
+.nav-menu > li {
+    flex-shrink: 0; 
+    position: relative;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem; 
+    padding: 0.8rem 1rem;
+    transition: all 0.3s;
+    white-space: nowrap; 
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.nav-menu a:hover {
+    color: var(--color-accent);
+    background: rgba(124, 179, 66, 0.1);
+    border-radius: 6px;
+}
+
+.nav-menu a i.fa-chevron-down {
+    font-size: 0.7rem;
+    transition: transform 0.3s;
+}
+
+.dropdown:hover > a i.fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Content */
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(26, 26, 26, 0.98);
+    backdrop-filter: blur(10px);
+    min-width: 180px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    border-radius: 8px;
+    margin-top: 0.2rem;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    border: 1px solid rgba(124, 179, 66, 0.2);
+    z-index: 1000;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 0.9rem 1.3rem;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.9rem;
+}
+
+.dropdown-content a:hover {
+    color: var(--color-accent);
+    background: rgba(124, 179, 66, 0.05);
+    padding-left: 1.5rem;
+}
+
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Biểu tượng Hamburger (Mobile) */
+.mobile-menu-toggle {
+    display: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 1010; 
+}
+
+
+/* ========================================= */
+/* 2. HERO SECTION */
+/* ========================================= */
+.hero {
+    margin-top: 55px; 
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); 
+}
+
+.hero-content-overlay {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+}
+
+.hero-content-overlay h1 {
+    font-size: 2.5rem; 
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.hero-content-overlay p {
+    font-size: 1.1rem; 
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.hero-highlight {
+    color: var(--color-accent);
+}
+
+/* ========================================= */
+/* 3. MARQUEE SECTION (Tỉnh/Thành) */
+/* ========================================= */
+.marquee-section {
+    padding: 20px 0;
+    background-color: var(--color-primary); 
+    overflow: hidden; 
+    border-bottom: 3px solid var(--color-accent);
+}
+
+.marquee-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.marquee-section .section-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.marquee {
+    white-space: nowrap; 
+    box-sizing: border-box;
+    display: flex; 
+}
+
+.marquee-content {
+    display: inline-flex; 
+    animation: marquee-animation 40s linear infinite;
+}
+
+.marquee-content .province-placeholder {
+    height: 30px; 
+    padding: 0 40px;
+    line-height: 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+    transition: color 0.3s;
+    flex-shrink: 0;
+}
+
+.marquee-content .province-placeholder:hover {
+    color: var(--color-accent);
+}
+
+@keyframes marquee-animation {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); } 
+}
+
+
+/* ========================================= */
+/* 4. BANNER QUẢNG CÁO (PROMO) */
+/* ========================================= */
+.promo-banner {
+    background-color: var(--color-accent); 
+    padding: 12px 5%; 
+    text-align: center;
+}
+
+.banner-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; 
+    flex-wrap: wrap; 
+}
+
+.promo-banner p {
+    color: var(--color-primary);
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+}
+
+.btn-banner-cta {
+    background-color: var(--color-primary); 
+    color: var(--color-light);
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-banner-cta:hover {
+    background-color: #0056b3; 
+}
+
+/* ========================================= */
+/* 5. NEWS SECTION (5 Ô TIN TỨC) */
+/* ========================================= */
+#tin-tuc {
+    background: var(--color-light);
+    padding: 4rem 0;
+}
+
+.news-slider-container {
+    overflow-x: auto; 
+    padding-bottom: 20px;
+    scrollbar-width: thin; 
+    scrollbar-color: var(--color-accent) #ddd; 
+}
+
+.news-slider-container::-webkit-scrollbar {
+    height: 8px;
+}
+.news-slider-container::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 4px;
+}
+.news-slider-container::-webkit-scrollbar-track {
+    background: #ddd;
+}
+
+.news-slider-wrapper {
+    display: flex; 
+    gap: 25px; 
+    padding: 0 10px;
+}
+
+.news-card {
+    min-width: 250px; 
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    flex-shrink: 0; 
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(124, 179, 66, 0.4);
+}
+
+.news-image {
+    width: 100%;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+}
+
+.news-card:hover .news-image {
+    transform: scale(1.05);
+}
+
+.news-content {
+    padding: 1.2rem;
+}
+
+.news-date {
+    color: var(--color-accent);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: var(--color-primary);
+}
+
+.news-excerpt {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.view-all {
+    text-align: center;
+    margin-top: 40px;
+}
+
+
+/* ========================================= */
+/* 6. ACTIVITIES SECTION */
+/* ========================================= */
+#hoat-dong {
+    background: #f5f5f5;
+    padding: 4rem 0;
+}
+
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.activity-card {
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: white;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.activity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(124, 179, 66, 0.4);
+}
+
+.activity-image-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.activity-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.activity-card:hover .activity-image-wrapper img {
+    transform: scale(1.05);
+}
+
+.activity-title {
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+#hoat-dong .activity-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    padding: 1.5rem 1rem 1rem;
+    z-index: 2;
+}
+
+#hoat-dong .activity-card {
+    height: 300px;
+}
+
+#hoat-dong .activity-image-wrapper {
+    height: 100%;
+}
+
+
+
+/* ========================================= */
+/* 7. VIDEO SECTION */
+/* ========================================= */
+#video {
+    background: var(--color-light);
+    padding: 4rem 0;
+}
+.video-container {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+}
+
+
+/* ========================================= */
+/* 8. SCHEDULE SECTION */
+/* ========================================= */
+#lich-thi-dau {
+    background: #f5f5f5;
+    padding: 4rem 0;
+}
+
+.schedule-table {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.schedule-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.schedule-table th {
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
+    color: white;
+    padding: 1.2rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.schedule-table td {
+    padding: 1.2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.schedule-table tr:hover {
+    background: #f9f9f9;
+}
+
+.match-date {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+
+/* ========================================= */
+/* 9. FOOTER (4 Cột + Nhà Tài Trợ + Social Icons) */
+/* ========================================= */
+footer {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: white;
+    padding: 4rem 0 0;
+}
+
+.footer-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 3rem;
+    padding-bottom: 2rem; 
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-logo-img {
+    height: 45px; /* Chiều cao logo trong Footer */
+}
+
+.footer-logo-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.footer-logo-sub {
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    font-weight: 300;
+}
+
+.footer-desc {
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Social Icons */
+.social-icons {
+    display: flex;
+    gap: 0.8rem; 
+    margin-top: 0.5rem;
+    align-items: center; 
+}
+
+.social-icon {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
+.social-icon.facebook:hover { background: #1877F2; }
+.social-icon.instagram:hover { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #ff5213 45%, #d62976 60%, #9d64d9 90%); }
+.social-icon.youtube:hover { background: #FF0000; }
+.social-icon.tiktok:hover { background: #000000; }
+.social-icon.telegram:hover { background: #0088CC; }
+
+/* Footer Titles */
+.footer-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 30px; 
+    height: 2px;
+    background: var(--color-accent);
+    border-radius: 2px;
+}
+
+/* Footer Links */
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.7);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    color: var(--color-accent);
+    padding-left: 0.5rem;
+}
+
+.footer-links a i {
+    font-size: 0.7rem;
+    color: var(--color-accent);
+}
+
+/* Footer Contact */
+.footer-contact {
+    list-style: none;
+}
+
+.footer-contact li {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.footer-contact i {
+    color: var(--color-accent);
+    font-size: 1rem;
+    margin-top: 0.1rem;
+    min-width: 15px;
+}
+
+/* KHU VỰC NHÀ TÀI TRỢ */
+.footer-partners {
+    padding: 2rem 5%;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-partners .section-subtitle {
+    color: var(--color-light);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.partner-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.partner-logos .partner {
+    color: var(--color-light); 
+    font-weight: 600;
+    padding: 8px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 0.9em;
+    height: 40px; 
+    line-height: 22px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    border-radius: 6px;
+}
+
+
+/* Footer Bottom */
+.footer-bottom {
+    padding: 1.5rem 0;
+}
+
+.footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-bottom-content p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+}
+
+.footer-bottom-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.footer-bottom-links a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-bottom-links a:hover {
+    color: var(--color-accent);
+}
+
+.footer-bottom-links span {
+    color: rgba(255,255,255,0.3);
+}
+
+
+/* ========================================= */
+/* 10. RESPONSIVE (MOBILE) */
+/* ========================================= */
+@media (max-width: 992px) { 
+    .container {
+        padding: 0 1.5rem;
+    }
+    
+    /* Header/Menu Mobile */
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 55px; /* Chiều cao Header */
+        right: -100%;
+        width: 70%;
+        max-width: 300px;
+        height: calc(100vh - 55px);
+        background: var(--color-primary);
+        flex-direction: column;
+        padding: 2rem 0;
+        transition: right 0.4s ease-in-out;
+        align-items: flex-start;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .nav-menu li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-menu a {
+        padding: 1rem 2rem;
+        width: 100%;
+        display: block;
+        font-size: 1rem;
+    }
+
+    .dropdown-content {
+        position: static; 
+        box-shadow: none;
+        background: rgba(124, 179, 66, 0.1); 
+        border: none;
+        margin-top: 0;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        display: none; 
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block; 
+    }
+    
+    /* Hero Section Mobile */
+    .hero {
+        height: 400px;
+    }
+    .hero-content-overlay h1 {
+        font-size: 1.8rem;
+    }
+    .hero-content-overlay p {
+        font-size: 1rem;
+    }
+    .btn-cta {
+        font-size: 0.9rem;
+        padding: 0.8rem 1.5rem;
+    }
+    
+    /* News Section Mobile */
+    .news-card {
+        min-width: 85vw; 
+    }
+
+    /* Footer Mobile */
+    .footer-main {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-bottom-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
