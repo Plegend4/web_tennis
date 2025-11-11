@@ -39,7 +39,7 @@ include_once 'config.php';
                 <li><a href="tin-tuc.php">Tin tức</a></li>
                 <li><a href="hoat-dong.php">Hoạt động</a></li>
                 <li><a href="video.php">Video hay</a></li>
-                <li><a href="index.php#lich-thi-dau">Lịch thi đấu</a></li>
+                <li><a href="lich-thi-dau.php">Lịch Thi Đấu</a></li>
                 <li class="dropdown">
                     <a href="#">34 CLB thành viên <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-content dropdown-scrollable">
