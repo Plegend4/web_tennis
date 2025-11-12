@@ -69,6 +69,7 @@ include_once 'config.php';
                         <a href="index.php#lien-he">Liên hệ</a>
                     </div>
                 </li>
+                <li><a href="/admin/admin.php">Quản trị</a></li>
             </ul>
         </nav>
     </header> 

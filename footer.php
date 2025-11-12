@@ -80,15 +80,46 @@
                 <div class="partner-logos">
                     <?php
                     if (isset($conn)) {
-                        $sql_sponsors = "SELECT name FROM sponsors ORDER BY level DESC, name ASC LIMIT 4";
+                        $sql_sponsors = "SELECT name, logo_url FROM sponsors ORDER BY level DESC, name ASC LIMIT 4";
                         $result_sponsors = $conn->query($sql_sponsors);
 
                         if ($result_sponsors && $result_sponsors->num_rows > 0) {
                             while($row = $result_sponsors->fetch_assoc()) {
-                                echo '<span class="partner">[' . htmlspecialchars(strtoupper($row["name"])) . ']</span>';
+                                $raw_logo = $row["logo_url"];
+                                $logo_url = safe_image_url($raw_logo);
+                                $name = htmlspecialchars($row["name"]);
+                                $logo_src = $logo_url ? $logo_url : 'img/partner-placeholder.png';
+                                // Nếu là đường dẫn tương đối và file không tồn tại trên server, fallback sang img/logo.png
+                                if ($logo_src && strpos($logo_src, 'http') !== 0 && strpos($logo_src, '/') !== 0) {
+                                    $localPath = __DIR__ . '/' . $logo_src;
+                                    if (!file_exists($localPath)) {
+                                        // Nếu file không tồn tại, thử tìm với các đuôi ảnh phổ biến (.png, .jpg, .jpeg, .webp)
+                                        $pathInfo = pathinfo($logo_src);
+                                        $dir = ($pathInfo['dirname'] && $pathInfo['dirname'] !== '.') ? $pathInfo['dirname'] . '/' : '';
+                                        $name = $pathInfo['filename'];
+                                        $candidates = ['png','jpg','jpeg','webp'];
+                                        $found = false;
+                                        foreach ($candidates as $ext) {
+                                            $tryLocal = __DIR__ . '/' . $dir . $name . '.' . $ext;
+                                            if (file_exists($tryLocal)) {
+                                                $logo_src = $dir . $name . '.' . $ext;
+                                                $found = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!$found) {
+                                            $logo_src = 'img/logo.png';
+                                        }
+                                    }
+                                }
+                                // Force no filter inline as a hotfix in case other CSS or caching applies a grayscale filter
+                                echo '<img src="' . htmlspecialchars($logo_src) . '" alt="' . $name . '" class="partner-logo" title="' . $name . '" style="filter: none !important;">';
                             }
                         } else {
-                            echo '<span class="partner">[ĐANG CẬP NHẬT]</span>';
+                            // Demo placeholders khi chưa có logo
+                            for ($i = 1; $i <= 4; $i++) {
+                                echo '<div class="partner-logo-placeholder">Logo ' . $i . '</div>';
+                            }
                         }
                     }
                     ?>

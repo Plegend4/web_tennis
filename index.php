@@ -36,7 +36,28 @@ include 'header.php';
                     $marquee_cities = array_merge($cities, $cities);
 
                     foreach ($marquee_cities as $city) {
-                        echo '<span class="province-placeholder">' . $city . '</span>';
+                        // try to render a club image if exists using multiple naming patterns;
+                        // common files in repo include names like ha-noi.jpg, dak-lak.jpg, can-tho.jpg
+                        $slug = slugify($city);
+                        $foundImg = '';
+                        $exts = ['jpg','png','jpeg','webp'];
+                        // candidates: clb-{slug}, {slug}
+                        $candidates = ['clb-' . $slug, $slug];
+                        foreach ($candidates as $base) {
+                            foreach ($exts as $ext) {
+                                $try = 'img/' . $base . '.' . $ext;
+                                if (file_exists(__DIR__ . '/' . $try)) {
+                                    $foundImg = $try;
+                                    break 2;
+                                }
+                            }
+                        }
+
+                        if ($foundImg) {
+                            echo '<span class="province-placeholder"><img class="marquee-logo" src="' . htmlspecialchars($foundImg) . '" alt="' . htmlspecialchars($city) . '"></span>';
+                        } else {
+                            echo '<span class="province-placeholder">' . htmlspecialchars($city) . '</span>';
+                        }
                     }
                     ?>
                 </div>
@@ -65,10 +86,13 @@ include 'header.php';
                             while($row = $result_news->fetch_assoc()) {
                                 $formatted_date = date("d/m/Y", strtotime($row["post_date"]));
                                 $detail_link = "chi-tiet-tin.php?slug=" . htmlspecialchars($row["slug"]);
-                                
+                                // compute safe image URL before output
+                                $img = safe_image_url($row["image_url"]);
+                                $img_src = $img ? $img : 'img/placeholder-news.jpg';
+
                                 echo '
                                 <a href="' . $detail_link . '" class="news-card">
-                                    <div class="news-image" style="background-image: url(\'' . htmlspecialchars($row["image_url"]) . '\');"></div>
+                                    <div class="news-image" style="background-image: url(\'' . htmlspecialchars($img_src) . '\');"></div>
                                     <div class="news-content">
                                         <div class="news-date">' . $formatted_date . '</div>
                                         <h3 class="news-title">' . htmlspecialchars($row["title"]) . '</h3>
@@ -100,10 +124,12 @@ include 'header.php';
                     if ($result_activities && $result_activities->num_rows > 0) {
                         while($row = $result_activities->fetch_assoc()) {
                             $detail_link = "chi-tiet-hoat-dong.php?slug=" . htmlspecialchars($row["slug"]);
+                            $actImg = safe_image_url($row['image_url']);
+                            $act_src = $actImg ? $actImg : 'img/placeholder-activity.jpg';
                             echo '
                             <a href="' . $detail_link . '" class="activity-card">
                                 <div class="activity-image-wrapper">
-                                    <img src="' . htmlspecialchars($row['image_url']) . '" alt="' . htmlspecialchars($row['name']) . '">
+                                    <img src="' . htmlspecialchars($act_src) . '" alt="' . htmlspecialchars($row['name']) . '">
                                 </div>
                                 <div class="activity-title">' . htmlspecialchars($row['name']) . '</div>
                             </a>';
