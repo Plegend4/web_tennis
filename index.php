@@ -183,6 +183,43 @@ include 'header.php';
                 </div>
             </div>
         </section>
+
+        <section id="thanh-vien">
+            <div class="container">
+                <h2 class="section-title">Các CLB Thành Viên</h2>
+                <div class="clubs-grid">
+                    <?php
+                    // Lấy danh sách CLB và nhóm theo thành phố
+                    $sql_all_clubs = "SELECT name, city FROM clubs WHERE is_active = 1 ORDER BY city ASC, name ASC";
+                    $result_all_clubs = $conn->query($sql_all_clubs);
+                    
+                    $clubs_by_city = [];
+                    if ($result_all_clubs && $result_all_clubs->num_rows > 0) {
+                        while($row = $result_all_clubs->fetch_assoc()) {
+                            $clubs_by_city[$row['city']][] = $row['name'];
+                        }
+                    }
+
+                    if (!empty($clubs_by_city)) {
+                        foreach ($clubs_by_city as $city => $clubs) {
+                            // Tạo ID cho anchor, ví dụ: clb-Ha-Noi
+                            $city_id = "clb-" . urlencode(str_replace(' ', '-', $city));
+                            echo '<div class="city-group" id="' . $city_id . '">';
+                            echo '<h3 class="city-name">' . htmlspecialchars($city) . '</h3>';
+                            echo '<ul class="club-list">';
+                            foreach ($clubs as $club_name) {
+                                echo '<li><i class="fas fa-shield-alt"></i> ' . htmlspecialchars($club_name) . '</li>';
+                            }
+                            echo '</ul>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '<p style="text-align: center; grid-column: 1 / -1;">Chưa có thông tin về các CLB thành viên.</p>';
+                    }
+                    ?>
+                </div>
+            </div>
+        </section>
     </main>
 
     <?php 

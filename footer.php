@@ -78,11 +78,32 @@
             <div class="footer-partners">
                 <h3 class="section-subtitle">ĐỐI TÁC VÀ NHÀ TÀI TRỢ CHÍNH THỨC</h3>
                 <div class="partner-logos">
-                    <img src="img/logo_ggroup.png" alt="Logo G-Group" class="partner-logo">
-                    <img src="img/logo_songtra.png" alt="Logo Song Tra" class="partner-logo">
-                    <img src="img/logo_thanhgiong.png" alt="Logo Thanh Giong" class="partner-logo">
-                    <img src="img/logo_upvietnam.png" alt="Logo Up Vietnam" class="partner-logo">
-                    <img src="img/logo_xtlenergy.png" alt="Logo XTL Energy" class="partner-logo">
+                    <?php
+                    // Truy vấn để lấy thông tin các đối tác
+                    if (isset($conn)) {
+                        $sql_partners = "SELECT name, logo_url, link FROM partners ORDER BY display_order ASC";
+                        $result_partners = $conn->query($sql_partners);
+
+                        if ($result_partners && $result_partners->num_rows > 0) {
+                            while($row = $result_partners->fetch_assoc()) {
+                                $partner_link = !empty($row["link"]) ? htmlspecialchars($row["link"]) : '#';
+                                $logo_url = htmlspecialchars($row["logo_url"]);
+                                $partner_name = htmlspecialchars($row["name"]);
+                                
+                                echo '<a href="' . $partner_link . '" target="_blank" rel="noopener noreferrer" class="partner-logo-link">';
+                                echo '<img src="' . $logo_url . '" alt="Logo ' . $partner_name . '" class="partner-logo">';
+                                echo '</a>';
+                            }
+                        } else {
+                            // Fallback nếu không có dữ liệu trong CSDL, hiển thị logo tĩnh
+                            echo '<img src="img/logo_ggroup.png" alt="Logo G-Group" class="partner-logo">';
+                            echo '<img src="img/logo_songtra.png" alt="Logo Song Tra" class="partner-logo">';
+                            echo '<img src="img/logo_thanhgiong.png" alt="Logo Thanh Giong" class="partner-logo">';
+                            echo '<img src="img/logo_upvietnam.png" alt="Logo Up Vietnam" class="partner-logo">';
+                            echo '<img src="img/logo_xtlenergy.png" alt="Logo XTL Energy" class="partner-logo">';
+                        }
+                    }
+                    ?>
                 </div>
             </div>
 

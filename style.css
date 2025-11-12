@@ -823,7 +823,6 @@ footer {
     height: 80px; /* Cập nhật chiều cao logo theo yêu cầu */
     max-width: 180px; /* Điều chỉnh chiều rộng tối đa */
     object-fit: contain;
-    filter: grayscale(100%) brightness(150%);
     transition: all 0.3s ease;
 }
 
