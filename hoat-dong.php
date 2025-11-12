@@ -95,10 +95,13 @@ include 'header.php';
                                 $short_desc = substr($short_desc, 0, 120) . '...';
                             }
 
+                            $img = safe_image_url($activity['image_url']);
+                            $img_src = $img ? $img : 'img/placeholder-activity.jpg';
+
                             echo '
                             <a href="' . $detail_link . '" class="activity-card">
                                 <div class="activity-image-wrapper">
-                                    <img src="' . htmlspecialchars($activity['image_url']) . '" alt="' . htmlspecialchars($activity['name']) . '">
+                                    <img src="' . htmlspecialchars($img_src) . '" alt="' . htmlspecialchars($activity['name']) . '">
                                 </div>
                                 <div class="activity-content">
                                     <div class="activity-date">Ngày diễn ra: ' . $formatted_date . '</div>

@@ -1,4 +1,4 @@
-sponsors-- --------------------------------------------------------
+
 -- Host:                         127.0.0.1
 -- Server version:               8.4.3 - MySQL Community Server - GPL
 -- Server OS:                    Win64
@@ -28,22 +28,23 @@ CREATE TABLE IF NOT EXISTS `clubs` (
   `city` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Tỉnh/Thành phố',
   `contact_person` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Người đại diện',
   `founded_year` year DEFAULT NULL COMMENT 'Năm thành lập',
+	`image_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Hình ảnh CLB',
   `is_active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table db_tennis_club.clubs: ~10 rows (approximately)
-INSERT INTO `clubs` (`id`, `name`, `city`, `contact_person`, `founded_year`, `is_active`) VALUES
-	(1, 'CLB Tennis Hà Nội', 'Hà Nội', 'Nguyễn Văn A', NULL, 1),
-	(2, 'CLB Tennis Hồ Chí Minh', 'Hồ Chí Minh', 'Trần Thị B', NULL, 1),
-	(3, 'CLB Tennis Đà Nẵng', 'Đà Nẵng', 'Lê Văn C', NULL, 1),
-	(4, 'CLB Tennis Hải Phòng', 'Hải Phòng', 'Phạm Thị D', NULL, 1),
-	(5, 'CLB Tennis Cần Thơ', 'Cần Thơ', 'Hoàng Văn E', NULL, 1),
-	(6, 'CLB Tennis Vĩnh Phúc', 'Vĩnh Phúc', 'Đỗ Thị F', NULL, 1),
-	(7, 'CLB Tennis Đồng Nai', 'Đồng Nai', 'Bùi Văn G', NULL, 1),
-	(8, 'CLB Tennis Bình Dương', 'Bình Dương', 'Võ Thị H', NULL, 1),
-	(9, 'CLB Tennis Nghệ An', 'Nghệ An', 'Cao Văn I', NULL, 1),
-	(10, 'CLB Tennis Huế', 'Thừa Thiên Huế', 'Mai Thị K', NULL, 1);
+INSERT INTO `clubs` (`id`, `name`, `city`, `contact_person`, `founded_year`, `image_url`, `is_active`) VALUES
+	(1, 'CLB Tennis Hà Nội', 'Hà Nội', 'Nguyễn Văn A', NULL, 'img/clb-ha-noi.png', 1),
+	(2, 'CLB Tennis Hồ Chí Minh', 'Hồ Chí Minh', 'Trần Thị B', NULL, 'img/clb-ho-chi-minh.png', 1),
+	(3, 'CLB Tennis Đà Nẵng', 'Đà Nẵng', 'Lê Văn C', NULL, 'img/clb-da-nang.png', 1),
+	(4, 'CLB Tennis Hải Phòng', 'Hải Phòng', 'Phạm Thị D', NULL, 'img/clb-hai-phong.png', 1),
+	(5, 'CLB Tennis Cần Thơ', 'Cần Thơ', 'Hoàng Văn E', NULL, 'img/clb-can-tho.png', 1),
+	(6, 'CLB Tennis Vĩnh Phúc', 'Vĩnh Phúc', 'Đỗ Thị F', NULL, 'img/clb-vinh-phuc.png', 1),
+	(7, 'CLB Tennis Đồng Nai', 'Đồng Nai', 'Bùi Văn G', NULL, 'img/clb-dong-nai.png', 1),
+	(8, 'CLB Tennis Bình Dương', 'Bình Dương', 'Võ Thị H', NULL, 'img/clb-binh-duong.png', 1),
+	(9, 'CLB Tennis Nghệ An', 'Nghệ An', 'Cao Văn I', NULL, 'img/clb-nghe-an.png', 1),
+	(10, 'CLB Tennis Huế', 'Thừa Thiên Huế', 'Mai Thị K', NULL, 'img/clb-thua-thien-hue.png', 1);
 
 -- Dumping structure for table db_tennis_club.matches
 DROP TABLE IF EXISTS `matches`;

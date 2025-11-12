@@ -66,40 +66,17 @@ include 'header.php';
                 <div class="video-gallery-grid">
                     
                     <?php
-                    // Mảng dữ liệu video giả lập. Sau này sẽ thay bằng truy vấn CSDL
-                    $videos = [
-                        [
-                            "title" => "Highlight trận chung kết giải A",
-                            "youtube_url" => "https://www.youtube.com/embed/dQw4w9WgXcQ" // Placeholder URL
-                        ],
-                        [
-                            "title" => "Kỹ thuật backhand nâng cao",
-                            "youtube_url" => "https://www.youtube.com/embed/oHg5SJYRHA0" // Placeholder URL
-                        ],
-                        [
-                            "title" => "Bài tập thể lực cho tay vợt",
-                            "youtube_url" => "https://www.youtube.com/embed/a3Z7zEc7AXQ" // Placeholder URL
-                        ],
-                        [
-                            "title" => "Phỏng vấn vận động viên sau trận đấu",
-                            "youtube_url" => "https://www.youtube.com/embed/8-m_241XpOA" // Placeholder URL
-                        ],
-                         [
-                            "title" => "Những pha bóng đẹp nhất tuần",
-                            "youtube_url" => "https://www.youtube.com/embed/QH2-TGUlwu4" // Placeholder URL
-                        ],
-                         [
-                            "title" => "Hướng dẫn giao bóng xoáy",
-                            "youtube_url" => "https://www.youtube.com/embed/Y9-x972-g_o" // Placeholder URL
-                        ]
-                    ];
+                    // Truy vấn dữ liệu video từ CSDL
+                    $sql_videos = "SELECT title, youtube_id FROM videos ORDER BY upload_date DESC";
+                    $result_videos = $conn->query($sql_videos);
 
-                    if (!empty($videos)) {
-                        foreach($videos as $video) {
+                    if ($result_videos && $result_videos->num_rows > 0) {
+                        while($video = $result_videos->fetch_assoc()) {
+                            $youtube_url = "https://www.youtube.com/embed/" . htmlspecialchars($video['youtube_id']);
                             echo '
                             <div class="video-card">
                                 <div class="video-embed">
-                                    <iframe src="' . htmlspecialchars($video['youtube_url']) . '" title="' . htmlspecialchars($video['title']) . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <iframe src="' . $youtube_url . '" title="' . htmlspecialchars($video['title']) . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                                 <div class="video-content">
                                     <h3 class="video-title">' . htmlspecialchars($video['title']) . '</h3>

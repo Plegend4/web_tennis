@@ -309,58 +309,100 @@ nav {
 }
 
 /* ========================================= */
-/* 3. MARQUEE SECTION (Tỉnh/Thành) */
+/* 3. MARQUEE SECTION (Tỉnh/Thành) - FIX */
 /* ========================================= */
 .marquee-section {
-    padding: 20px 0;
+    padding: 25px 0;
     background-color: var(--color-primary); 
-    overflow: hidden; 
+    overflow: hidden;
     border-bottom: 3px solid var(--color-accent);
+    position: relative;
 }
 
 .marquee-title {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .marquee-section .section-subtitle {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
     margin-bottom: 0;
+    font-weight: 600;
 }
 
 .marquee {
-    white-space: nowrap; 
-    box-sizing: border-box;
-    display: flex; 
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: transparent;
 }
 
 .marquee-content {
-    display: inline-flex; 
-    animation: marquee-animation 40s linear infinite;
+    display: inline-flex;
+    white-space: nowrap;
+    animation: scroll-marquee 40s linear infinite;
+    align-items: center;
+    gap: 0;
 }
 
-.marquee-content .province-placeholder {
-    height: 30px; 
-    padding: 0 40px;
-    line-height: 30px;
-    font-size: 1.2rem;
+/* Tạm dừng khi hover */
+.marquee:hover .marquee-content {
+    animation-play-state: paused;
+}
+
+.province-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* Tinh chỉnh padding để ôm sát nội dung hơn, đặc biệt khi có logo */
+    padding: 8px 15px; /* Giảm padding ngang và dọc một chút */
+    font-size: 1.1rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 1px;
-    transition: color 0.3s;
-    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.9); /* Đảm bảo màu chữ sáng rõ */
+    letter-spacing: 1.2px;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    /* min-width: fit-content; để nó tự co giãn theo nội dung */
 }
 
-.marquee-content .province-placeholder:hover {
+.province-placeholder:hover {
     color: var(--color-accent);
+    background: rgba(124, 179, 66, 0.08);
 }
 
-@keyframes marquee-animation {
-    0% { transform: translate3d(0, 0, 0); }
-    100% { transform: translate3d(-50%, 0, 0); } 
+/* Logo trong marquee */
+.marquee-logo {
+    height: 35px; /* Giữ nguyên chiều cao */
+    width: auto; /* Giữ nguyên width auto để duy trì tỷ lệ */
+    max-width: 90px; /* Giới hạn chiều rộng tối đa */
+    margin: 0 8px; /* Giảm margin ngang một chút để logo không quá xa nhau */
+    object-fit: contain; /* Đảm bảo hình ảnh được chứa hoàn toàn */
+    display: inline-block; /* Quan trọng để áp dụng width/height */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+    /* Không ép logo về tông xám - giữ nguyên màu gốc */
+    filter: none;
+    transition: all 0.3s ease;
+    /* Loại bỏ !important nếu không thực sự cần thiết,
+       đôi khi nó gây khó khăn trong việc debug */
 }
 
+.marquee-logo:hover {
+    filter: brightness(1) grayscale(0);
+    transform: scale(1.08);
+}
+
+/* Animation chạy */
+@keyframes scroll-marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
 
 /* ========================================= */
 /* 4. BANNER QUẢNG CÁO (PROMO) */
@@ -806,17 +848,45 @@ footer {
     gap: 20px;
 }
 
-.partner-logos .partner {
-    color: var(--color-light); 
-    font-weight: 600;
-    padding: 8px 15px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    font-size: 0.9em;
-    height: 40px; 
-    line-height: 22px;
-    box-sizing: border-box;
-    flex-shrink: 0;
-    border-radius: 6px;
+.partner-logo {
+    height: 60px;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+    /* show original logo colors by default */
+    opacity: 0.9;
+    /* Đảm bảo không có filter làm cho logo bị xám */
+    filter: none !important;
+    transition: all 0.3s;
+    border-radius: 8px;
+}
+
+.partner-logo:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+
+.partner-logo-placeholder {
+    height: 60px;
+    width: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.partner-logo-placeholder:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
 }
 
 

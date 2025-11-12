@@ -87,11 +87,12 @@ if (isset($_GET['slug']) && !empty($_GET['slug'])) {
                         <h1><?php echo htmlspecialchars($article['title']); ?></h1>
                     </div>
                     
-                    <div class="article-image" style="background-image: url('<?php echo htmlspecialchars($article['image_url']); ?>');"></div>
+                    <?php $article_img = safe_image_url($article['image_url']); ?>
+                    <div class="article-image" style="background-image: url('<?php echo htmlspecialchars($article_img ? $article_img : 'img/placeholder-news.jpg'); ?>');"></div>
                     
                     <div class="article-content">
-                        <?php echo nl2br($article['content']); /* Cân nhắc dùng HTML Purifier để bảo mật hơn */ ?>
-                        
+                        <?php echo nl2br(htmlspecialchars($article['content'])); /* Đã sanitize để chống XSS */ ?>
+
                         <p style="margin-top: 3rem;">**--- Hết bài viết ---**</p>
                     </div>
 

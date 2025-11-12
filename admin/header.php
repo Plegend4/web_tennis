@@ -39,14 +39,20 @@ include_once 'config.php';
                 <li><a href="tin-tuc.php">Tin tức</a></li>
                 <li><a href="hoat-dong.php">Hoạt động</a></li>
                 <li><a href="video.php">Video hay</a></li>
-                <li><a href="lich-thi-dau.php">Lịch Thi Đấu</a></li>
+                <li><a href="index.php#lich-thi-dau">Lịch thi đấu</a></li>
                 <li class="dropdown">
                     <a href="#">34 CLB thành viên <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-content dropdown-scrollable">
                         <?php
                         if (isset($conn)) {
                             $sql_clubs = "SELECT name, city FROM clubs ORDER BY city ASC, name ASC";
-                            $result_clubs = $conn->query($sql_clubs);
+                            $stmt = $conn->prepare($sql_clubs);
+                            $result_clubs = false;
+                            if ($stmt) {
+                                // No parameters to bind for this simple SELECT, but using prepared for consistency
+                                $stmt->execute();
+                                $result_clubs = $stmt->get_result();
+                            }
 
                             if ($result_clubs && $result_clubs->num_rows > 0) {
                                 while($row = $result_clubs->fetch_assoc()) {
@@ -69,7 +75,11 @@ include_once 'config.php';
                         <a href="index.php#lien-he">Liên hệ</a>
                     </div>
                 </li>
-                <li><a href="/admin/admin.php">Quản trị</a></li>
+                <?php if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true): ?>
+                    <li><a href="admin_logout.php"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+                <?php else: ?>
+                    <li><a href="admin_login.php"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header> 
